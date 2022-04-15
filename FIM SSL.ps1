@@ -8,14 +8,14 @@ $response = Read-Host -Prompt "Please enter 1 or 2"
 
 if ($response -eq "1".Trim()) {
     # Calc Hash from  the target file and stroe in baseline.txt all files inside \FIM
-    $files = Get-ChildItem -Path "C:\Users\Ahmad\Documents\FIM TEST"
+    $files = Get-ChildItem -Path "C:\Users\Ahmad\Documents\GitHub\FIM\FIM TEST"
 
     #For each file, calc hash then write in baseline.txt
     foreach ($f in $files){
         Calculate-File-Hash $f.FullName                     
         # using my function .FullName make it give full path as arg
 
-        "$($hash.path)|$($hash.Hash)" | Out-File -FilePath "C:\Users\Ahmad\Documents\FIM TEST\Baseline.txt"     
+        "$($hash.path)|$($hash.Hash)" | Out-File -FilePath "C:\Users\Ahmad\Documents\GitHub\FIM\FIM TEST\Baseline.txt"     
         # "$()|$()"output: Path | $hash; first hash var then store value in.path
 }
 }
@@ -26,7 +26,7 @@ elseif ($response -eq "2".Trim()){
 
 function Calculate-File-Hash($filepath) {              #Path of the file to monitor
     $Filehash = Get-FileHash -Path $filepath -Algorithm SHA512
-    return $Filehash # usage: $hash = Calculate-File-Hash "C:\Users\Ahmad\Documents\FIM TEST\A.txt" 
+    return $Filehash # usage: $hash = Calculate-File-Hash "C:\Users\Ahmad\Documents\GitHub\FIM\FIM TEST\A.txt" 
 }
 
 function Erase-Baseline-If-exist {
