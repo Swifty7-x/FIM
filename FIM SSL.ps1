@@ -15,7 +15,10 @@ function Erase-Baseline-If-exists {
     }
 }
 
-#               ---Main(argv)----               #
+#################################################
+##              ---Main(argv)----              ##
+#################################################
+
 Write-Host "What would you like to do?"
 Write-Host "1. Create a new baseline"
 Write-Host "2. Begin monitoring baseline"
@@ -33,7 +36,7 @@ if ($response -eq "1".Trim()) {
         # using my function .FullName make it give full path as arg
 
         "$($hash.Path) | $($hash.Hash)" | Out-File -FilePath ".\Baseline.txt" -Append     
-        # Output looks like: C:/Document/...  |  D6938E93YAKJGMELFKEROGM<EOLFEsOLTSGYE
+        # Output looks like:        C:/Document/...  |  D6938E93YAKJGMELFKEROGM<EOLFEsOLTSGYE then pip Append to file Baseline
     }
 }
 elseif ($response -eq "2".Trim()) {
@@ -60,15 +63,15 @@ elseif ($response -eq "2".Trim()) {
     foreach ($f in $files) {
         $hash = Calculate-File-Hash $f.FullName
 
-        # TODO: keeps notifiying me that files has been CREATED while not 
+        # TODO: keeps notifiying me that files has been CREATED :(
 
         # Notify if file is not in baseline (Newly added/created)
-        if ($fileHashDic[$hash.Path] -eq $null) { #if it's true we know a file has been added
+        if ($null -eq $fileHashDic[$hash.Path]) { #if it's true we know a file has been added
         write-host "$($hash.Path) has been created!" -ForegroundColor Yellow
         }
         else {
               if ($fileHashDic[$hash.Path] -eq $hash.Hash) { 
-              #Do nothing as it matches
+              #Do nothing as it matches (normal)
               }else {
               write-host "$($hash.Path) has been changed!" -ForegroundColor Red
               }
